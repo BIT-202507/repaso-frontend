@@ -1,0 +1,18 @@
+<form
+  class="form form-category"
+  [formGroup]="formData"
+>
+  <h1>Register Category</h1>
+  <div class="field">
+    <label for="category-name">Name Category</label>
+    <input type="text" formControlName="name" id="category-name" class="name-category" placeholder="Ej: Pasta al ajillo">
+  </div>
+  <div class="field">
+    <label for="category-description">Description</label>
+    <textarea formControlName="description" id="category-description" placeholder="Brief description"></textarea>
+  </div>
+  <div class="field buttons">
+    <button type="submit">Register</button>
+    <button type="button">Reset</button>
+  </div>
+</form>

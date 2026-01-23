@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-category-new',
@@ -15,9 +15,15 @@ export class CategoryNew {
   constructor() {
     // Instanciando un objeto de la clase FormGroup (para crear en el formulario), se usa para agrupar los campos que llevara el formulario.
     this.formData = new FormGroup({
-      name: new FormControl( '' ),    // Instanciando un objeto de la clase FormControl (para crear un campo dentro del formulario)
-      description: new FormControl( '' )
-    });
+      name: new FormControl(
+        '',
+        [ Validators.required, Validators.minLength( 3 ) ]
+      ),    // Instanciando un objeto de la clase FormControl (para crear un campo dentro del formulario)
+      description: new FormControl(
+        '',
+        [ Validators.required, Validators.minLength( 15 ), Validators.maxLength( 140 ) ]
+      )
+   });
   }
 
   // Metodo con el que vamos a capturar los datos del formulario al presionar el boton de 'Register'

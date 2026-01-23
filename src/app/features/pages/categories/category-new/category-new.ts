@@ -20,4 +20,20 @@ export class CategoryNew {
     });
   }
 
+  // Metodo con el que vamos a capturar los datos del formulario al presionar el boton de 'Register'
+  onSubmit() {
+
+    // Verificar si el formulario es valido.
+    // IMPORTANTE: Si los campos del formulario no tienen validaciones, el estado del formulario siempre sera valido
+    if( this.formData.valid ) {
+      // Registra --> Service
+      console.log( this.formData.value);    // Muestra los valores de los campos del formulario
+
+    }
+    else {
+      // Muestre todos los mensajes de error de cada uno de los campos en la vista
+      console.log( 'Formulario invalido' );
+    }
+
+  }
 }

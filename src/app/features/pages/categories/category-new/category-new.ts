@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpCategory } from '../../../../core/services/http-category';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-category-new',
@@ -11,8 +13,9 @@ export class CategoryNew {
   // Define el atributo que contendra la estructura del formulario (agrupa los campos del formulario)
 
   formData!: FormGroup;   // Tipado que me sugiere Angular para los formularios reactivos
+  registerSubscribed!: Subscription // Intento controlar cuando Subcribir/Dessubcribir un servicio
 
-  constructor() {
+  constructor( private httpCategory: HttpCategory ) {
     // Instanciando un objeto de la clase FormGroup (para crear en el formulario), se usa para agrupar los campos que llevara el formulario.
     this.formData = new FormGroup({
       name: new FormControl(
@@ -33,7 +36,22 @@ export class CategoryNew {
     // IMPORTANTE: Si los campos del formulario no tienen validaciones, el estado del formulario siempre sera valido
     if( this.formData.valid ) {
       // Registra --> Service
-      console.log( this.formData.value);    // Muestra los valores de los campos del formulario
+      console.log( this.formData.value );    // Muestra los valores de los campos del formulario
+      this.registerSubscribed = this.httpCategory.createCategory( this.formData.value ).subscribe({
+        next: ( data ) => {
+          console.log( data );
+          // Limpia los campos del formulario solo cuando registra
+          this.formData.reset();
+        },
+        error: ( error ) => {
+          // Muestra las excepciones
+          console.error( error );
+        },
+        complete: () => {
+          // Toca todos los campos y activa o despliega los mensajes de error.
+          this.formData.markAsTouched();
+        }
+      });
 
     }
     else {
@@ -41,5 +59,13 @@ export class CategoryNew {
       console.log( 'Formulario invalido' );
     }
 
+  }
+
+  ngOnDestroy(): void {
+    console.info('ngOnDestroy');
+    if( this.registerSubscribed ) {
+      console.info('unSubscribe');
+      this.registerSubscribed.unsubscribe();    // Dessucribirme manualmente
+    }
   }
 }

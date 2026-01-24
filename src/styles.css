@@ -14,10 +14,40 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    gap: .5rem;
   }
 
   .error {
     color: red;
     font-size: .8rem;
   }
+
+
 }
+
+.active {
+  background-color: green;
+  border: 1px solid green;
+}
+
+.btn {
+  border: 1px solid blue;
+  padding: .5rem 1.2rem;
+  border-radius: .3rem;
+  font-size: .85rem;
+  font-weight: bold;
+
+  &.btn-register {
+    background: #7ecc7e;
+    color: white;
+    border: 1px solid #7ecc7e;
+  }
+
+  &.btn-reset {
+    background: #F3F3F3;
+    border: 1px solid lightgray;
+  }
+}
+
+
+

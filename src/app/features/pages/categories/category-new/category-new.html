@@ -47,8 +47,14 @@
 
     </div>
   </div>
+
+  <!-- TODO: [class.active]="formData.invalid" -->
   <div class="field buttons">
-    <button type="submit">Register</button>
-    <button type="reset">Reset</button>
+    <button
+      class="btn btn-register"
+      type="submit"
+      [disabled]="formData.invalid"
+    >Register</button>
+    <button class="btn btn-reset" type="reset">Reset</button>
   </div>
 </form>

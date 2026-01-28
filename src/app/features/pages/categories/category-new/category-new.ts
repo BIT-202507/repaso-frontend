@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpCategory } from '../../../../core/services/http-category';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+
+import { HttpCategory } from '../../../../core/services/http-category';
+
 
 @Component({
   selector: 'app-category-new',
@@ -15,7 +18,10 @@ export class CategoryNew {
   formData!: FormGroup;   // Tipado que me sugiere Angular para los formularios reactivos
   registerSubscribed!: Subscription // Intento controlar cuando Subcribir/Dessubcribir un servicio
 
-  constructor( private httpCategory: HttpCategory ) {
+  constructor(
+    private httpCategory: HttpCategory,
+    private router: Router
+  ) {
     // Instanciando un objeto de la clase FormGroup (para crear en el formulario), se usa para agrupar los campos que llevara el formulario.
     this.formData = new FormGroup({
       name: new FormControl(
@@ -42,6 +48,8 @@ export class CategoryNew {
           console.log( data );
           // Limpia los campos del formulario solo cuando registra
           this.formData.reset();
+          // Redirecciona a la lista de categorias
+          this.router.navigateByUrl( '/dashboard/categories' );
         },
         error: ( error ) => {
           // Muestra las excepciones

@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class HttpCategory {
-  private base_url: string = 'http://localhost:3000/api/categories';
+  private base_url: string = 'http://localhost:3000/api';
+  private slug: string = 'categories';
 
   // http = inject( HttpClient );    // Inyectar una dependencia en una función
 
@@ -15,15 +16,19 @@ export class HttpCategory {
   constructor( private http: HttpClient ) {}
 
   createCategory( newCategory: any ) : Observable<any> {
-    return this.http.post<any>( this.base_url, newCategory );
+    return this.http.post<any>( `${ this.base_url }/${ this.slug }`, newCategory );
   }
 
   getCategories() : Observable<any> {
-    return this.http.get<any>( this.base_url );
+    return this.http.get<any>( `${ this.base_url }/${ this.slug }` );
     // Verificar que estructura de datos envia el BackEnd
     // {
     //   msg: 'Lo que sea',
     //   data: [ data1, data2 ]
     // }
+  }
+
+  deleteCategoryById( id: string ) {
+    return this.http.delete( `${ this.base_url }/${ this.slug }/${id}` );
   }
 }

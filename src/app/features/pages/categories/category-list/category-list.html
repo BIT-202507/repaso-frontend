@@ -1,1 +1,27 @@
-<p>category-list works!</p>
+<!--
+<pre>
+  {{ categories$ | async | json }}
+</pre>
+-->
+
+<h2>HTML Table</h2>
+
+<table>
+  <tr>
+    <th>Name Category</th>
+    <th>Description</th>
+    <th>Actions</th>
+  </tr>
+  @for ( category of ( categories$ | async ); track $index) {
+
+    <tr>
+      <td>{{ category.name }}</td>
+      <td>{{ category.description }}</td>
+      <td>
+        <a href="#">Edit</a>
+        <button>Delete</button>
+      </td>
+    </tr>
+  }
+
+</table>

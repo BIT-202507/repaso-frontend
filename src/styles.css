@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Form Styles */
 .form {
   width: 50%;
   margin: 0 auto;
@@ -47,6 +49,23 @@
     background: #F3F3F3;
     border: 1px solid lightgray;
   }
+}
+
+/* Table Styles */
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
 
 

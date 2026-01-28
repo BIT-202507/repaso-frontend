@@ -18,8 +18,8 @@
       <td>{{ category.name }}</td>
       <td>{{ category.description }}</td>
       <td>
-        <a href="#">Edit</a>
-        <button>Delete</button>
+        <button (click)="onEdit( category._id )" >Edit</button>
+        <button (click)="onDelete( category._id )" >Delete</button>
       </td>
     </tr>
   }

@@ -18,6 +18,8 @@
       <td>{{ category.name }}</td>
       <td>{{ category.description }}</td>
       <td>
+        <!-- <a [routerLink]="['/dashboard/category/edit/', category._id ]">Edit</a> -->
+        <a [routerLink]="['/dashboard', 'category', 'edit', category._id ]">Edit</a>
         <button (click)="onEdit( category._id )" >Edit</button>
         <button (click)="onDelete( category._id )" >Delete</button>
       </td>

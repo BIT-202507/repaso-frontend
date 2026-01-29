@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { HttpCategory } from '../../../../core/services/http-category';
 import { AsyncPipe } from '@angular/common';
+import { Router, RouterLink } from "@angular/router";
 import { BehaviorSubject, catchError, Observable, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-category-list',
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, RouterLink],
   templateUrl: './category-list.html',
   styleUrl: './category-list.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -17,7 +18,10 @@ export class CategoryList {
   // Paso 2: Define el Trigger (Disparador). Tiene un valor inicial y emitira los cambios (stributo publico)
   private refreshTrigger$ = new BehaviorSubject<void>(undefined);
 
-  constructor( private httpCategory: HttpCategory ) {}
+  constructor(
+    private httpCategory: HttpCategory,
+    private router: Router
+  ) {}
 
   // Usamos el Hook del Ciclo de vida que avisa que se esta inicializando el componente
   ngOnInit() {
@@ -45,6 +49,10 @@ export class CategoryList {
   onEdit( id: string ) {
     console.info( `Edita la categoria con id: ${ id }` );
     // Esto se ejecuto, por ende haga algo otra cosa
+    // this.router.navigateByUrl( '/dashboard/category/edit/' + id );
+    // this.router.navigateByUrl( `/dashboard/category/edit/${ id }` );
+    // this.router.navigate([ '/dashboard/category/edit/', id ]);
+    this.router.navigate([ '/dashboard','category', 'edit', id ]);
   }
 
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 
 // El servicio del FrontEnd se habla con el Backend (API)
 @Injectable({
@@ -20,7 +20,11 @@ export class HttpCategory {
   }
 
   getCategories() : Observable<any> {
-    return this.http.get<any>( `${ this.base_url }/${ this.slug }` );
+    return this.http.get<any>( `${ this.base_url }/${ this.slug }` )
+      .pipe(
+        tap( data => console.info( data )),
+        catchError( err => of([]))
+      )
     // Verificar que estructura de datos envia el BackEnd
     // {
     //   msg: 'Lo que sea',

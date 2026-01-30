@@ -35,4 +35,8 @@ export class HttpCategory {
   deleteCategoryById( id: string ) {
     return this.http.delete( `${ this.base_url }/${ this.slug }/${id}` );
   }
+
+  getCategoryById( id: string ) {
+    return this.http.get( `${ this.base_url }/${ this.slug }/${id}` );
+  }
 }

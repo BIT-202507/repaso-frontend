@@ -1,1 +1,60 @@
-<p>category-edit works!</p>
+
+<form
+  class="form form-category"
+  [formGroup]="formData"
+  (ngSubmit)="onSubmit()"
+>
+  <h1>Edit Category</h1>
+  <div class="field">
+    <label for="category-name">Name Category</label>
+    <input type="text" formControlName="name" id="category-name" class="name-category" placeholder="Ej: Pasta al ajillo">
+    <div class="error">
+      <!-- Validacion de los estados del campo 'name' -->
+      @if ( this.formData.get( 'name' )?.invalid && ( this.formData.get( 'name' )?.dirty || this.formData.get( 'name' )?.touched ) ) {
+
+        <!-- Validaciones que hemos definido en el campo del formulario -->
+        @if ( this.formData.get( 'name' )?.errors?.['required'] ) {
+          <small>El nombre de la categoria es obligatorio</small>
+        }
+
+        @if ( this.formData.get( 'name' )?.errors?.[ 'minlength' ] ) {
+          <small>El nombre debe tener al menos 3 caracteres</small>
+        }
+
+      }
+    </div>
+  </div>
+  <div class="field">
+    <label for="category-description">Description</label>
+    <textarea formControlName="description" id="category-description" placeholder="Brief description"></textarea>
+    <div class="error">
+      <!-- Validacion de los estados del campo 'description' -->
+      @if ( this.formData.get( 'description' )?.invalid && ( this.formData.get( 'description' )?.dirty || this.formData.get( 'description' )?.touched ) ) {
+
+        @if( this.formData.get( 'description' )?.errors?.[ 'required' ] ) {
+          <small>La descripción de la categoría es obligatoria</small>
+        }
+
+        @if( this.formData.get( 'description' )?.errors?.[ 'minlength' ] ) {
+          <small>La descripción debe tener al menos 15 caracteres</small>
+        }
+
+        @if( this.formData.get( 'description' )?.errors?.[ 'maxlength' ] ) {
+          <small>La descripción debe tener máximo 140 caracteres</small>
+        }
+      }
+
+
+    </div>
+  </div>
+
+  <!-- TODO: [class.active]="formData.invalid" -->
+  <div class="field buttons">
+    <button
+      class="btn btn-register"
+      type="submit"
+      [disabled]="formData.invalid"
+    >Save</button>
+    <button class="btn btn-reset" type="reset">Reset</button>
+  </div>
+</form>

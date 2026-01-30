@@ -50,6 +50,12 @@ export class CategoryEdit {
         this.httpCategory.getCategoryById( this.categoryId ).subscribe({
           next: ( data ) => {
             console.log( 'Categoria ', data );
+
+            // Paso 3: Actualizar los campos del formulario
+            this.formData.patchValue({
+              name: data.name,
+              description: data.description
+            });
           },
           error: ( err ) => {
             console.error(err);
@@ -62,7 +68,30 @@ export class CategoryEdit {
   }
 
   onSubmit() {
-    console.log(this.formData.value);
+    // Verificamos si el formulario es valido
+    if( this.formData.valid ) {
+      // Actualiza --> Service
+      this.httpCategory.updateCategoryById(
+        this.categoryId,
+        this.formData.value
+      ).subscribe({
+        next: ( data ) => {
+          console.log( data );
+          this.formData.reset();                              // Limpiamos el formulario
+          this.router.navigateByUrl('/dashboard/categories'); // Redirecciona
+        },
+        error: (err) => {
+          console.error(err);
+        },
+        complete: () => {
+          this.formData.markAsTouched();  // Despliega todos los mensajes de error por que toca todos los campos del formulario
+        }
+      });
+    }
+    else {
+      // Muestre todos los mensajes de error de cada uno de los campos en la vista
+      console.log( 'Formulario invalido' );
+    }
   }
 
 }

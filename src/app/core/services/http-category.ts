@@ -32,11 +32,15 @@ export class HttpCategory {
     // }
   }
 
-  deleteCategoryById( id: string ) {
-    return this.http.delete( `${ this.base_url }/${ this.slug }/${id}` );
+  deleteCategoryById( id: string ): Observable<any> {
+    return this.http.delete<any>( `${ this.base_url }/${ this.slug }/${id}` );
   }
 
-  getCategoryById( id: string ) {
-    return this.http.get( `${ this.base_url }/${ this.slug }/${id}` );
+  getCategoryById( id: string ): Observable<any> {
+    return this.http.get<any>( `${ this.base_url }/${ this.slug }/${id}` );
+  }
+
+  updateCategoryById( id: string | null, updatedCategory: any ): Observable<any> {
+    return this.http.patch<any>(`${ this.base_url }/${ this.slug }/${id}`, updatedCategory );
   }
 }

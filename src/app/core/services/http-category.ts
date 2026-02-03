@@ -3,13 +3,14 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { Category } from '../interfaces/category';
 import { ResponseCategory } from '../interfaces/response-category';
+import { environment } from '../../../environments/environment';
 
 // El servicio del FrontEnd se habla con el Backend (API)
 @Injectable({
   providedIn: 'root',
 })
 export class HttpCategory {
-  private base_url: string = 'http://localhost:3000/api';
+  private base_url: string = environment.baseUrl;
   private slug: string = 'categories';
 
   // http = inject( HttpClient );    // Inyectar una dependencia en una función

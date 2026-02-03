@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
+import { Category } from '../interfaces/category';
+import { ResponseCategory } from '../interfaces/response-category';
 
 // El servicio del FrontEnd se habla con el Backend (API)
 @Injectable({
@@ -15,14 +17,18 @@ export class HttpCategory {
   // Se inyecta como dependencia la clase que permite hacer peticiones
   constructor( private http: HttpClient ) {}
 
-  createCategory( newCategory: any ) : Observable<any> {
-    return this.http.post<any>( `${ this.base_url }/${ this.slug }`, newCategory );
+  createCategory( newCategory: Partial<Category> ) : Observable<Category> {
+    return this.http.post<Category>( `${ this.base_url }/${ this.slug }`, newCategory );
   }
 
-  getCategories() : Observable<any> {
-    return this.http.get<any>( `${ this.base_url }/${ this.slug }` )
+  // Tipado nativo de TypeScript ==> Category[]
+  // Tipado de Java              ==> Array<Category>
+
+  getCategories() : Observable<Category[]> {
+    return this.http.get<ResponseCategory>( `${ this.base_url }/${ this.slug }` )
       .pipe(
         tap( data => console.info( data )),
+        map( resp => resp.categories ),     // Extraer el arreglo de categorias
         catchError( err => of([]))
       )
     // Verificar que estructura de datos envia el BackEnd
@@ -32,15 +38,15 @@ export class HttpCategory {
     // }
   }
 
-  deleteCategoryById( id: string ): Observable<any> {
-    return this.http.delete<any>( `${ this.base_url }/${ this.slug }/${id}` );
+  deleteCategoryById( id: string ): Observable<Category> {
+    return this.http.delete<Category>( `${ this.base_url }/${ this.slug }/${id}` );
   }
 
-  getCategoryById( id: string ): Observable<any> {
-    return this.http.get<any>( `${ this.base_url }/${ this.slug }/${id}` );
+  getCategoryById( id: string ): Observable<Category> {
+    return this.http.get<Category>( `${ this.base_url }/${ this.slug }/${id}` );
   }
 
-  updateCategoryById( id: string | null, updatedCategory: any ): Observable<any> {
-    return this.http.patch<any>(`${ this.base_url }/${ this.slug }/${id}`, updatedCategory );
+  updateCategoryById( id: string | null, updatedCategory: Category ): Observable<Category> {
+    return this.http.patch<Category>(`${ this.base_url }/${ this.slug }/${id}`, updatedCategory );
   }
 }
